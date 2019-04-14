@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.UserMapper">
+
+
+
+    <select id="queryCount" parameterType="com.jk.model.UserBean" resultType="int">
+      select count(1) from t_usera
+    </select>
+
+    <select id="queryUserList" resultType="com.jk.model.UserBean" >
+        select * from t_usera  LIMIT #{start},#{rows}
+    </select>
+
+    <!--  新增-->
+    <insert id="saveUser" parameterType="com.jk.model.UserBean" >
+       INSERT into t_usera (name,age,sex) VALUES(#{name},#{age},#{sex})
+    </insert>
+
+    <!--删除-->
+    <delete id="deleteItem" parameterType="int">
+        delete from t_usera where id in
+        <foreach collection="array" index="index" item="item" open="("
+                 close=")" separator=",">
+            #{item}
+        </foreach>
+	</delete>
+
+  <!--  修改-->
+    <update id="updateUser" parameterType="com.jk.model.UserBean">
+        UPDATE t_usera set name=#{name}, age=#{age} ,sex=#{sex} where id=#{id}
+    </update>
+
+</mapper>
